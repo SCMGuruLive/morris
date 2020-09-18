@@ -18,44 +18,82 @@
 /* along with this program.  If not, see http://www.gnu.org/licenses/. */
 
 #include <stdio.h>
+#include <string.h>
 #include <peekpoke.h>
 
 void display(void)
 {
-  char ClearScreen = 147;
+	char Clear_Screen = 147;
 
-  int MemoryAddress1 = 53280;
-  int MemoryAddress2 = 53281;
-  int MemoryAddress3 = 646;
-  int FrameColor = 0;
-  int ScreenColor = 0;
-  int TextColor = 12;
+	int Memory_Address1 = 53280;
+	int Memory_Address2 = 53281;
+	int Memory_Address3 = 646;
+	int Frame_Color = 0;
+	int Screen_Color = 0;
+	int Text_Color = 12;
 
-  printf("%c",ClearScreen);
+	printf("%c", Clear_Screen);
 
-  POKE(MemoryAddress1,FrameColor);
-  POKE(MemoryAddress2,ScreenColor);
-  POKE(MemoryAddress3,TextColor);
+	POKE(Memory_Address1, Frame_Color);
+	POKE(Memory_Address2, Screen_Color);
+	POKE(Memory_Address3, Text_Color);
 }
 
 void conversation(void)
 {
-  char BotName[] = {'M','o','r','r','i','s','\0'};
+	char Bot_Name[] = { 'M', 'o', 'r', 'r', 'i', 's', '\0' };
+	char Answer[4];
+	char Human_Name[10];
+	int count;
 
-  printf("[");
-  printf("%s",BotName);
-  printf("]");
-  printf(" Hi, have we met?\n");
-  printf("[");
-  printf("Unknown");
-  printf("]");
+	printf("[ ");
+	printf("%s", Bot_Name);
+	printf(" ]");
+	printf(" Hi, have we met?\n\n");
+
+	printf("[ ");
+	printf("Unknown");
+	printf(" ] ");
+	fgets(Answer, sizeof(Answer), stdin);
+
+	if (strcmp(Answer, "yes") == 0) {
+		printf("\n\n[ ");
+		printf("%s", Bot_Name);
+		printf(" ] ");
+		printf("I don't remember you.\n");
+	}
+
+	printf("\n[ ");
+	printf("%s", Bot_Name);
+	printf(" ]");
+	printf(" What is your name?\n\n");
+
+	printf("[ ");
+	printf("Unknown");
+	printf(" ] ");
+	fgets(Human_Name, sizeof(Human_Name), stdin);
+
+	for (count = 0; count < strlen(Human_Name); count++) {
+		if (Human_Name[count] == '\n')
+			Human_Name[count] = '\0';
+	}
+
+	printf("\n[ ");
+	printf("%s", Bot_Name);
+	printf(" ]");
+	printf(" What can I do for you?\n\n");
+
+	printf("[ ");
+	printf("%s", Human_Name);
+	printf(" ] ");
+	fgets(Human_Name, sizeof(Human_Name), stdin);
 }
 
 int main(void)
 {
-  display();
+	display();
 
-  conversation();
+	conversation();
 
-  return(0);
+	return (0);
 }

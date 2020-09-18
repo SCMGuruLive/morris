@@ -1,4 +1,4 @@
-/* main.c
+/* main.c */
 /* This file is part of the Morris project */
 
 /* Copyright (C) 2020 Scott C. MacCallum */
@@ -25,18 +25,22 @@ void display(void)
 {
 	char Clear_Screen = 147;
 
-	int Memory_Address1 = 53280;
-	int Memory_Address2 = 53281;
-	int Memory_Address3 = 646;
+	int Memory_Address_1 = 53280;
+	int Memory_Address_2 = 53281;
+	int Memory_Address_3 = 646;
 	int Frame_Color = 0;
 	int Screen_Color = 0;
 	int Text_Color = 12;
 
+	/* Clear the screen */
+
 	printf("%c", Clear_Screen);
 
-	POKE(Memory_Address1, Frame_Color);
-	POKE(Memory_Address2, Screen_Color);
-	POKE(Memory_Address3, Text_Color);
+	/* Make all of the screen black and the text grey */
+
+	POKE(Memory_Address_1, Frame_Color);
+	POKE(Memory_Address_2, Screen_Color);
+	POKE(Memory_Address_3, Text_Color);
 }
 
 void conversation(void)
@@ -44,7 +48,8 @@ void conversation(void)
 	char Bot_Name[] = { 'M', 'o', 'r', 'r', 'i', 's', '\0' };
 	char Answer[4];
 	char Human_Name[10];
-	int count;
+
+	int Count;
 
 	printf("[ ");
 	printf("%s", Bot_Name);
@@ -54,6 +59,7 @@ void conversation(void)
 	printf("[ ");
 	printf("Unknown");
 	printf(" ] ");
+
 	fgets(Answer, sizeof(Answer), stdin);
 
 	if (strcmp(Answer, "yes") == 0) {
@@ -71,28 +77,31 @@ void conversation(void)
 	printf("[ ");
 	printf("Unknown");
 	printf(" ] ");
+
 	fgets(Human_Name, sizeof(Human_Name), stdin);
 
-	for (count = 0; count < strlen(Human_Name); count++) {
-		if (Human_Name[count] == '\n')
-			Human_Name[count] = '\0';
+	/* Replace the newline character in Human_Name with a null zero */
+
+	for (Count = 0; Count < strlen(Human_Name); Count++) {
+		if (Human_Name[Count] == '\n')
+			Human_Name[Count] = '\0';
 	}
 
 	printf("\n[ ");
 	printf("%s", Bot_Name);
 	printf(" ]");
-	printf(" What can I do for you?\n\n");
+	printf(" How can I help, %s?\n\n", Human_Name);
 
 	printf("[ ");
 	printf("%s", Human_Name);
 	printf(" ] ");
+
 	fgets(Human_Name, sizeof(Human_Name), stdin);
 }
 
 int main(void)
 {
 	display();
-
 	conversation();
 
 	return (0);

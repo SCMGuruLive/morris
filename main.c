@@ -23,18 +23,12 @@
 
 void display(void)
 {
-	char Clear_Screen = 147;
-
 	int Memory_Address_1 = 53280;
 	int Memory_Address_2 = 53281;
 	int Memory_Address_3 = 646;
 	int Frame_Color = 0;
 	int Screen_Color = 0;
 	int Text_Color = 12;
-
-	/* Clear the screen */
-
-	printf("%c", Clear_Screen);
 
 	/* Make all of the screen black and the text grey */
 
@@ -45,11 +39,14 @@ void display(void)
 
 void conversation(void)
 {
+	char Clear_Screen = 147;
 	char Bot_Name[] = { 'M', 'o', 'r', 'r', 'i', 's', '\0' };
 	char Answer[4];
 	char Human_Name[10];
 
 	int Count;
+
+	printf("%c", Clear_Screen);
 
 	printf("[ ");
 	printf("%s", Bot_Name);
@@ -62,6 +59,11 @@ void conversation(void)
 
 	fgets(Answer, sizeof(Answer), stdin);
 
+	/* Reject newline input as an answer */
+
+	if (strcmp(Answer, "\n") == 0)
+		conversation();
+
 	if (strcmp(Answer, "yes") == 0) {
 		printf("\n\n[ ");
 		printf("%s", Bot_Name);
@@ -73,14 +75,13 @@ void conversation(void)
 	printf("%s", Bot_Name);
 	printf(" ]");
 	printf(" What is your name?\n\n");
-
 	printf("[ ");
 	printf("Unknown");
 	printf(" ] ");
 
 	fgets(Human_Name, sizeof(Human_Name), stdin);
 
-	/* Replace the newline character in Human_Name with a null zero */
+	/* Replace newline in Human_Name with a null zero */
 
 	for (Count = 0; Count < strlen(Human_Name); Count++) {
 		if (Human_Name[Count] == '\n')

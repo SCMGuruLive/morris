@@ -40,7 +40,7 @@ void display(void)
 void conversation(void)
 {
 	char Clear_Screen = 147;
-	char Bot_Name[] = { 'M', 'o', 'r', 'r', 'i', 's', '\0' };
+	char Bot_Name[] = "Morris";
 	char Answer[4];
 	char Human_Name[10];
 
@@ -59,6 +59,13 @@ void conversation(void)
 
 	fgets(Answer, sizeof(Answer), stdin);
 
+	/* Replace newline in answer with a null zero */
+
+	for (Count = 0; Count < strlen(Answer); Count++) {
+		if (Human_Name[Count] == '\n')
+			Human_Name[Count] = '\0';
+	}
+
 	/* Reject newline input as an answer */
 
 	if (strcmp(Answer, "\n") == 0)
@@ -71,17 +78,24 @@ void conversation(void)
 		printf("I don't remember you.\n");
 	}
 
+	if (strcmp(Answer, "YES") == 0) {
+		printf("\n\n[ ");
+		printf("%s", Bot_Name);
+		printf(" ] ");
+		printf("You don't need to shout.\n");
+	}
+
 	printf("\n[ ");
 	printf("%s", Bot_Name);
 	printf(" ]");
-	printf(" What is your name?\n\n");
+	printf(" What's your name?\n\n");
 	printf("[ ");
 	printf("Unknown");
 	printf(" ] ");
 
 	fgets(Human_Name, sizeof(Human_Name), stdin);
 
-	/* Replace newline in Human_Name with a null zero */
+	/* Replace newline in human name with a null zero */
 
 	for (Count = 0; Count < strlen(Human_Name); Count++) {
 		if (Human_Name[Count] == '\n')
